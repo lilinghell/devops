@@ -1,10 +1,14 @@
 # devops
-面向开发阶段的devops  
-<img src="https://github.com/lilinghell/devops/blob/master/doc/img/ljjg.jpg" height=400px alt="逻辑架构"/>
+
+....devops
 
 ## Features
 
 ...
+
+## Architecture
+<img src="https://github.com/lilinghell/devops/blob/master/doc/img/ljjg.jpg" alt="逻辑架构"/>  
+<img src="https://github.com/lilinghell/devops/blob/master/doc/img/txjg.jpg" alt="体系结构"/>
 
 ## Modules
 * devops-vue-admin
