@@ -1,0 +1,92 @@
+@import '~quasar-variables'
+@import '~quasar-styl'
+
+html
+  font-size: 14px
+a
+  text-decoration: none;
+  transition: color 0.3s;
+  &:hover
+    cursor: pointer;
+  &.link
+    color: $blue;
+    &:hover
+      color: $blue-4;
+.field
+  font-size: 14px;
+  color: $grey-9;
+.notify-inline
+  min-width: initial;
+.text-title
+  color: $title-color;
+.data-none
+  color: $grey-5;
+  font-size: 16px;
+  padding: 32px 0;
+  i
+    font-size: 32px;
+    margin-right: 16px;
+.uploader-content
+  min-height: 100px;
+.uploader-wrapper
+  transform: translateY(-50%);
+.table-head-input
+  height: 40px;
+.table-head-btn
+  min-height: 32px;
+.modal-content-xs
+  width: 300px;
+  background: white;
+.modal-content-sm
+  width: 400px;
+  background: white;
+.modal-content-md
+  width: 500px;
+  background: white;
+.modal-content-lg
+  width: 600px;
+  background: white;
+.fixed-head-input
+  width: 160px;
+// uploader
+.uploader-container
+  border: 2px dashed $grey-5;
+  width: 100%;
+.uploader-content
+  align-items: center;
+  justify-content: center;
+  background: $grey-3;
+  width: 100%;
+  min-height: 0;
+.uploader-link
+  margin-left: 4px;
+  color: $primary;
+  position: relative;
+  &:hover
+    text-decoration: underline;
+    color: $teal-4;
+// generate .modal-content-col-i
+generateModalContent(selector, i = '')
+  unquote(replace(unquote('<i>'), unquote(i), unquote(selector)))
+for $i in (1..$flex-cols)
+  $ic = s('%s', $i)
+  {generateModalContent('.modal-content-col-<i>', $ic)}
+    background: white;
+    width (round($i*100 / $flex-cols, 4))vw !important
+.scrollbar-hidden
+  &::-webkit-scrollbar
+    width: 0;
+
+.grid-container
+  margin-left: 1px;
+  align-items: stretch;
+.grid-border
+  margin-left: -1px;
+  border-top: 0;
+  height: 100%;
+.tag-label
+  font-weight: 400;
+  min-height: 1.6em;
+  line-height: 1.6em;
+  padding-top: 0;
+  padding-bottom: 0;
