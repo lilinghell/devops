@@ -1,7 +1,6 @@
 # devops
 面向开发阶段的devops
-![逻辑架构](https://github.com/lilinghell/devops/blob/master/doc/img/ljjg.jpg)
-
+<img src="https://github.com/lilinghell/devops/blob/master/doc/img/ljjg.jpg" width=300px height=400px alt="逻辑架构"/>
 
 ## Features
 
