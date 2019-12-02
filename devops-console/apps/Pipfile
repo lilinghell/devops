@@ -1,0 +1,31 @@
+[[source]]
+name = "pypi"
+url = "http://mirrors.aliyun.com/pypi/simple/"
+verify_ssl = false
+
+[dev-packages]
+
+[packages]
+django = "==2.1.5"
+djangorestframework = "*"
+django-cors-headers = "==2.4.0"
+pygments = "*"
+django-rest-swagger = "*"
+coreapi = "*"
+markdown = "*"
+drf-yasg = "*"
+djangorestframework-bulk = "*"
+werkzeug = "*"
+itsdangerous = "*"
+passlib = "*"
+django-filter = "*"
+pillow = "*"
+pyyaml = "*"
+django-filters = "*"
+django-debug-toolbar = "*"
+python-gitlab = "==1.8.0"
+pytest = "*"
+rest-condition = "*"
+
+[requires]
+python_version = "3.5"
