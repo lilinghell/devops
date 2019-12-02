@@ -96,3 +96,4 @@ ENV/
 logs/*
 .vscode/
 apps/.history/
+.history/
