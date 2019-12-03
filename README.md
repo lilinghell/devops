@@ -1,4 +1,4 @@
-# DevOps
+# DevOps v0.5.0
 
 <img src="https://github.com/lilinghell/devops/blob/master/doc/img/v.jpg" height=20px alt="version"/>
 
@@ -24,9 +24,9 @@ DevOps致力于提供微服务开发的一站式解决方案。此项目包含�
 ## 演示 Demo
 
 为了演示如何使用，您可以阅读 Wiki 的介绍文档，根据里面的步骤来体验。
-用户名/密码：admin/admin
+用户名/密码：demo1/demo1
 
-[Demo](http://118.242.36.102:12308/#/login)
+[演示Demo](http://118.242.36.102:12308/#/login)
 
 
 
