@@ -1,4 +1,4 @@
-# DevOps
+# DevOps v0.5.0
 
 <img src="https://github.com/lilinghell/devops/blob/master/doc/img/v.jpg" height=20px alt="version"/>
 
@@ -10,7 +10,7 @@ DevOps致力于提供微服务开发的一站式解决方案。此项目包含�
 
 * **需求**：需求管理，支持开发需求、业务需求。
 * **任务**：支持待分配、待处理、处理中、已完成的任务，且能够通过"聊天"的方式进行任务跟踪及任务发布。
-* **接口**：支持code模式(swagger)、UI模式的接口定义、已经接口的测试。
+* **接口**：支持code模式(swagger)、UI模式的接口定义及接口的测试。
 * **测试**： 支持测试用例的编写、测试计划的管理(手动测试、自动化测试)。
 * **流水线**：build(编译)-scanner(代码扫描)-deploy(部署)-test(测试)。
 
@@ -24,9 +24,9 @@ DevOps致力于提供微服务开发的一站式解决方案。此项目包含�
 ## 演示 Demo
 
 为了演示如何使用，您可以阅读 Wiki 的介绍文档，根据里面的步骤来体验。
-用户名/密码：admin/admin
+用户名/密码：demo1/demo1
 
-[Demo](http://118.242.36.102:12308/#/login)
+[演示Demo](http://118.242.36.102:12308/#/login)
 
 
 
