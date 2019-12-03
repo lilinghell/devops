@@ -1,6 +1,6 @@
 # DevOps
 
-[![vserion](https://github.com/lilinghell/devops/blob/master/doc/img/v.jpg)]
+![vserion](https://github.com/lilinghell/devops/blob/master/doc/img/v.jpg)
 
 DevOps致力于提供微服务开发的一站式解决方案。此项目包含开发阶段中的需求管理、任务管理、接口管理、测试管理、流水线管理、迭代管理，方便开发者使用该平台能够轻松一站式管理开发流程。
 
@@ -19,7 +19,7 @@ DevOps致力于提供微服务开发的一站式解决方案。此项目包含�
 
 ## 逻辑架构
 
-[![逻辑架构](https://github.com/lilinghell/devops/blob/master/doc/img/ljjg.jpg)]
+![逻辑架构](https://github.com/lilinghell/devops/blob/master/doc/img/ljjg.jpg)
 
 ## 演示 Demo
 
