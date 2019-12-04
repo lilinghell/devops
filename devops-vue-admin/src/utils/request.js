@@ -5,7 +5,7 @@ import store from '@/views/.storee';
 
 let isExpirys = false;
 if (process.env.NODE_ENV === 'production') {
-  axios.defaults.baseURL = 'http://10.134.13.25:8080/';
+  //axios.defaults.baseURL = 'http://10.134.13.25:8080/';
   // TODO offline support
   // isExpirys = true;
 }
