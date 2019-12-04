@@ -17,6 +17,54 @@ DevOps平台致力于提高开发人员生产力，提供开发流程的一站�
 
 更多功能请参考 [WIKI](https://github.com/lilinghell/devops/wiki)。
 
+** Wiki
+* 文档  
+  * [Home](https://github.com/lilinghell/devops/wiki)
+  * 企业
+    * [企业](https://github.com/lilinghell/devops/wiki/Enterprise)
+    * [企业用户](https://github.com/lilinghell/devops/wiki/Enterprise_Users)
+  * 项目
+    * [dashboard](https://github.com/lilinghell/devops/wiki/Dashboard)
+    * [应用](https://github.com/lilinghell/devops/wiki/Application)
+    * [需求](https://github.com/lilinghell/devops/wiki/Requirement)
+    * [任务](https://github.com/lilinghell/devops/wiki/Task)
+    * 设计
+      * [服务接口](https://github.com/lilinghell/devops/wiki/Designs_Interface)
+    * 测试
+      * [环境配置](https://github.com/lilinghell/devops/wiki/Test_Env)
+      * [用例库](https://github.com/lilinghell/devops/wiki/Test_Cases)
+      * 测试计划
+        * [计划](https://github.com/lilinghell/devops/wiki/Test_Plan)
+        * [auto计划](https://github.com/lilinghell/devops/wiki/Test_AutoPlan)
+     * 设置
+       * [基本信息](https://github.com/lilinghell/devops/wiki/Setting_ProjectInfo)
+       * [成员信息](https://github.com/lilinghell/devops/wiki/Setting_ProjectUser)
+       * [模块信息](https://github.com/lilinghell/devops/wiki/Setting_ProjectModule)
+       * [标签信息](https://github.com/lilinghell/devops/wiki/Setting_ProjectTag)
+* 文档  
+  * [Home](https://github.com/lilinghell/devops/wiki)
+  * 企业
+    * [企业](https://github.com/lilinghell/devops/wiki/Enterprise)
+    * [企业用户](https://github.com/lilinghell/devops/wiki/Enterprise_Users)
+  * 项目
+    * [dashboard](https://github.com/lilinghell/devops/wiki/Dashboard)
+    * [应用](https://github.com/lilinghell/devops/wiki/Application)
+    * [需求](https://github.com/lilinghell/devops/wiki/Requirement)
+    * [任务](https://github.com/lilinghell/devops/wiki/Task)
+    * 设计
+      * [服务接口](https://github.com/lilinghell/devops/wiki/Designs_Interface)
+    * 测试
+      * [环境配置](https://github.com/lilinghell/devops/wiki/Test_Env)
+      * [用例库](https://github.com/lilinghell/devops/wiki/Test_Cases)
+      * 测试计划
+        * [计划](https://github.com/lilinghell/devops/wiki/Test_Plan)
+        * [auto计划](https://github.com/lilinghell/devops/wiki/Test_AutoPlan)
+     * 设置
+       * [基本信息](https://github.com/lilinghell/devops/wiki/Setting_ProjectInfo)
+       * [成员信息](https://github.com/lilinghell/devops/wiki/Setting_ProjectUser)
+       * [模块信息](https://github.com/lilinghell/devops/wiki/Setting_ProjectModule)
+       * [标签信息](https://github.com/lilinghell/devops/wiki/Setting_ProjectTag)
+
 ## 逻辑架构
 
 <img src="https://github.com/lilinghell/devops/blob/master/doc/img/ljjg.jpg" height=450px alt="逻辑架构"/>
