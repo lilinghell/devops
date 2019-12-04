@@ -18,7 +18,6 @@ DevOps平台致力于提高开发人员生产力，提供开发流程的一站�
 更多功能请参考 [WIKI](https://github.com/lilinghell/devops/wiki)。
 
 ## Wiki
-* 文档  
   * [Home](https://github.com/lilinghell/devops/wiki)
   * 企业
     * [企业](https://github.com/lilinghell/devops/wiki/Enterprise)
