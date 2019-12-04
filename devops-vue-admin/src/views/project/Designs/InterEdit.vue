@@ -154,7 +154,7 @@ export default {
       updateInterface: "updateInterface"
     }),
     async handleEditInterface() {
-      await this.$parent.handUpdateInterface("code");
+      await this.$parent.$parent.handUpdateInterface("code");
       this.opened = false;
     }
   },

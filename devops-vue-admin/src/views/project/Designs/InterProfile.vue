@@ -231,6 +231,9 @@ export default {
     },
     openBody(data, jsContent) {
       let p = [];
+      if(undefined == data || undefined == data.schema) {
+        return p;
+      }
       if (undefined !== data.schema.$ref) {
         p = this.openRef(data.schema, jsContent, 30);
       } else {
