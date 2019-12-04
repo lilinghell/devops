@@ -40,8 +40,8 @@ DevOps平台致力于提高开发人员生产力，提供开发流程的一站�
        * [成员信息](https://github.com/lilinghell/devops/wiki/Setting_ProjectUser)
        * [模块信息](https://github.com/lilinghell/devops/wiki/Setting_ProjectModule)
        * [标签信息](https://github.com/lilinghell/devops/wiki/Setting_ProjectTag)
-     * [流水线(todo)]
-     * [xxxx]
+     * [流水线(todo)]()
+     * [xxxx]()
 
 ## 逻辑架构
 
