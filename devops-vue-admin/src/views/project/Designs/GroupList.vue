@@ -1,166 +1,37 @@
 <template>
   <div class="bg-white q-pa-md flex-center">
     <Loading :visible="globalLoading">
-    <q-splitter v-model="splitterModel" style="height: 100%; min-height: 500px;">
-      <template v-slot:before>
-        <div class="q-pa-md" @click="clickTree()">
-          <q-input ref="filter" dense v-model="filter" class="table-head-input">
-            <template v-slot:append>
-              <q-icon name="search" color="primary" @click="resetFilter" />
-            </template>
-          </q-input>
+      <q-splitter v-model="splitterModel" style="height: 100%; min-height: 500px;">
+        <template v-slot:before>
+          <div class="q-pa-md" @click="clickTree()">
+            <q-input ref="filter" dense v-model="filter" class="table-head-input">
+              <template v-slot:append>
+                <q-icon name="search" color="primary" @click="resetFilter" />
+              </template>
+            </q-input>
 
-          <q-tree
-            :nodes="simple"
-            node-key="id"
-            selected-color="primary"
-            :selected.sync="selected"
-            :filter="filter"
-            default-expand-all
-          />
-        </div>
-      </template>
+            <q-tree
+              :nodes="simple"
+              node-key="id"
+              selected-color="primary"
+              :selected.sync="selected"
+              :filter="filter"
+              default-expand-all
+            />
+          </div>
+        </template>
 
-      <template v-slot:after>
-        <q-tab-panels
-          v-model="selected"
-          animated
-          transition-prev="jump-up"
-          transition-next="jump-up"
-        >
-          <q-tab-panel v-if="groupFlag" :name="`${group.id}`">
-            <div class="text-h6">
-              <div>
-                <q-form ref="form" @submit="handUpdateGroup">
-                  <q-toolbar class="text-primary">
-                    <q-space />
-                    <q-btn-dropdown stretch flat label="Dropdown">
-                      <q-list>
-                        <q-item-label header>骨架生成</q-item-label>
-                        <q-item clickable v-close-popup>
-                          <q-item-section avatar>
-                            <q-avatar icon="folder" color="secondary" text-color="white" />
-                          </q-item-section>
-                          <q-item-section>
-                            <q-item-label>生成Mock</q-item-label>
-                            <q-item-label caption>February 22, 2016</q-item-label>
-                          </q-item-section>
-                          <q-item-section side>
-                            <q-icon name="info" />
-                          </q-item-section>
-                        </q-item>
-                        <q-item clickable v-close-popup>
-                          <q-item-section avatar>
-                            <q-avatar icon="folder" color="secondary" text-color="white" />
-                          </q-item-section>
-                          <q-item-section>
-                            <q-item-label>生成代码</q-item-label>
-                            <q-item-label caption>February 22, 2016</q-item-label>
-                          </q-item-section>
-                          <q-item-section side>
-                            <q-icon name="info" />
-                          </q-item-section>
-                        </q-item>
-                        <q-separator inset spaced />
-                        <q-item-label header>接口导出</q-item-label>
-                        <q-item clickable v-close-popup>
-                          <q-item-section avatar>
-                            <q-avatar icon="assignment" color="primary" text-color="white" />
-                          </q-item-section>
-                          <q-item-section>
-                            <q-item-label>Word</q-item-label>
-                            <q-item-label caption>February 22, 2016</q-item-label>
-                          </q-item-section>
-                          <q-item-section side>
-                            <q-icon name="info" />
-                          </q-item-section>
-                        </q-item>
-                      </q-list>
-                    </q-btn-dropdown>
-                    <q-separator dark vertical />
-                    <q-btn
-                      flat
-                      size="12px"
-                      round
-                      icon="edit"
-                      @click="editable = true"
-                      v-show="!editable"
-                    />
-
-                    <template v-if="editable">
-                      <q-btn
-                        type="submit"
-                        flat
-                        size="12px"
-                        round
-                        icon="done"
-                        :loading="loading['']"
-                      />
-                      <q-btn flat size="12px" round icon="clear" @click="handleReset()" />
-                    </template>
-                  </q-toolbar>
-                  <q-card-section class="q-gutter-y-sm">
-                    <q-input
-                      class="text-h4 q-mb-md"
-                      filled
-                      square
-                      v-model="group.name"
-                      type="text"
-                      bg-color="white"
-                      dense
-                      :rules="[
-                                () => !$v.group.name.$error || '请输入'
-                              ]"
-                      hide-bottom-space
-                      :disable="!editable"
-                    />
-                    <q-input
-                      filled
-                      square
-                      v-model="group.description"
-                      type="textarea"
-                      bg-color="white"
-                      dense
-                      hide-bottom-space
-                      :disable="!editable"
-                    />
-                    <p>
-                      <span>
-                        总共接口数量
-                        <span class="text-primary text-h5">({{groupInterNums}})</span>个,
-                      </span>
-                      现在你可以
-                      <a
-                        class="link text-primary"
-                        @click="handleAddGroupOpen"
-                      >添加组</a>
-                      <span>&nbsp;或&nbsp;</span>
-                      <a class="link text-primary text-h5" @click="handleAddInterfaceOpen">添加接口</a>
-                    </p>
-                  </q-card-section>
-                </q-form>
-              </div>
-            </div>
-          </q-tab-panel>
-          <q-tab-panel v-if="interFlag" :name="`interId_${inter.id}`">
-            <template>
-              <q-tabs
-                align="left"
-                v-model="tab"
-                class="text-grey-7"
-                active-color="primary"
-                indicator-color="primary"
-              >
-                <q-tab name="_a" label="预览" />
-                <q-tab name="_b" label="编辑" />
-                <q-tab name="_c" label="运行" />
-              </q-tabs>
-            </template>
-
-            <q-tab-panels v-model="tab">
-              <q-tab-panel name="_a">
+        <template v-slot:after>
+          <q-tab-panels
+            v-model="selected"
+            animated
+            transition-prev="jump-up"
+            transition-next="jump-up"
+          >
+            <q-tab-panel v-if="groupFlag" :name="`${group.id}`">
+              <div class="text-h6">
                 <div>
-                  <q-form ref="interForm" @submit="handUpdateInterface('ui')">
+                  <q-form ref="form" @submit="handUpdateGroup">
                     <q-toolbar class="text-primary">
                       <q-space />
                       <q-btn-dropdown stretch flat label="Dropdown">
@@ -229,287 +100,432 @@
                       </template>
                     </q-toolbar>
                     <q-card-section class="q-gutter-y-sm">
-                      <div class="row">
-                        <q-badge style="height: 20px;">{{ inter.version }}</q-badge>
-                        <q-input
-                          class="text-h4 q-mb-md"
-                          filled
-                          square
-                          v-model="inter.name"
-                          type="text"
-                          bg-color="white"
-                          dense
-                          :rules="[
-                                () => !$v.inter.name.$error || '请输入'
+                      <q-input
+                        class="text-h4 q-mb-md"
+                        filled
+                        square
+                        v-model="group.name"
+                        type="text"
+                        bg-color="white"
+                        dense
+                        :rules="[
+                                () => !$v.group.name.$error || '请输入'
                               ]"
-                          hide-bottom-space
-                          :disable="!editable"
-                        />
-                      </div>
+                        hide-bottom-space
+                        :disable="!editable"
+                      />
                       <q-input
                         style="height: 60px;"
                         filled
                         square
-                        v-model="inter.description"
+                        v-model="group.description"
                         type="textarea"
+                        bg-color="white"
                         dense
                         hide-bottom-space
                         :disable="!editable"
                       />
-                      <div class="row">
-                        <Field :label-col="3" align="right" style="width:10%;">
-                          <template v-slot:label>
-                            <span class="field"></span>
+                      <p>
+                        <span>
+                          总共接口数量
+                          <span class="text-primary text-h5">({{groupInterNums}})</span>个,
+                        </span>
+                        现在你可以
+                        <a
+                          class="link text-primary"
+                          @click="handleAddGroupOpen"
+                        >添加组</a>
+                        <span>&nbsp;或&nbsp;</span>
+                        <a class="link text-primary text-h5" @click="handleAddInterfaceOpen">添加接口</a>
+                      </p>
+                      <div class="q-pa-md" v-if="groupInterNums > 0">
+                        <q-table
+                          title
+                          :data="dataList"
+                          :columns="columns"
+                          row-key="name"
+                          color="amber"
+                        >
+                          <template v-slot:body-cell-operation="props">
+                            <q-td :class="props.col.__tdClass" class="q-gutter-x-sm">
+                              <a @click="handleShowInter(props.row)" class="link">详情</a>
+                            </q-td>
                           </template>
-                          <q-select
-                            filled
-                            :display-value="formatSelectDisplay(methodTypes, inter.method)"
-                            v-model="inter.method"
-                            :options="methodTypes"
-                            emit-value
-                            dense
-                            hint
-                            bg-color="white"
-                            hide-dropdown-icon
-                            :disable="!editable"
-                            hide-bottom-space
+                        </q-table>
+                      </div>
+                    </q-card-section>
+                  </q-form>
+                </div>
+              </div>
+            </q-tab-panel>
+            <q-tab-panel v-if="interFlag" :name="`interId_${inter.id}`">
+              <template>
+                <q-tabs
+                  align="left"
+                  v-model="tab"
+                  class="text-grey-7"
+                  active-color="primary"
+                  indicator-color="primary"
+                >
+                  <q-tab name="_a" label="预览" />
+                  <q-tab name="_b" label="编辑" />
+                  <q-tab name="_c" label="运行" />
+                </q-tabs>
+              </template>
+
+              <q-tab-panels v-model="tab">
+                <q-tab-panel name="_a">
+                  <div>
+                    <q-form ref="interForm" @submit="handUpdateInterface('ui')">
+                      <q-toolbar class="text-primary">
+                        <q-space />
+                        <q-btn-dropdown stretch flat label="Dropdown">
+                          <q-list>
+                            <q-item-label header>骨架生成</q-item-label>
+                            <q-item clickable v-close-popup>
+                              <q-item-section avatar>
+                                <q-avatar icon="folder" color="secondary" text-color="white" />
+                              </q-item-section>
+                              <q-item-section>
+                                <q-item-label>生成Mock</q-item-label>
+                                <q-item-label caption>February 22, 2016</q-item-label>
+                              </q-item-section>
+                              <q-item-section side>
+                                <q-icon name="info" />
+                              </q-item-section>
+                            </q-item>
+                            <q-item clickable v-close-popup>
+                              <q-item-section avatar>
+                                <q-avatar icon="folder" color="secondary" text-color="white" />
+                              </q-item-section>
+                              <q-item-section>
+                                <q-item-label>生成代码</q-item-label>
+                                <q-item-label caption>February 22, 2016</q-item-label>
+                              </q-item-section>
+                              <q-item-section side>
+                                <q-icon name="info" />
+                              </q-item-section>
+                            </q-item>
+                            <q-separator inset spaced />
+                            <q-item-label header>接口导出</q-item-label>
+                            <q-item clickable v-close-popup>
+                              <q-item-section avatar>
+                                <q-avatar icon="assignment" color="primary" text-color="white" />
+                              </q-item-section>
+                              <q-item-section>
+                                <q-item-label>Word</q-item-label>
+                                <q-item-label caption>February 22, 2016</q-item-label>
+                              </q-item-section>
+                              <q-item-section side>
+                                <q-icon name="info" />
+                              </q-item-section>
+                            </q-item>
+                          </q-list>
+                        </q-btn-dropdown>
+                        <q-separator dark vertical />
+                        <q-btn
+                          flat
+                          size="12px"
+                          round
+                          icon="edit"
+                          @click="editable = true"
+                          v-show="!editable"
+                        />
+
+                        <template v-if="editable">
+                          <q-btn
+                            type="submit"
+                            flat
+                            size="12px"
+                            round
+                            icon="done"
+                            :loading="loading['']"
                           />
-                        </Field>
-                        <Field :label-col="1" align="right" style="width:90%;">
-                          <template v-slot:label>
-                            <span class="field"></span>
-                          </template>
+                          <q-btn flat size="12px" round icon="clear" @click="handleReset()" />
+                        </template>
+                      </q-toolbar>
+                      <q-card-section class="q-gutter-y-sm">
+                        <div class="row">
+                          <q-badge style="height: 20px;">{{ inter.version }}</q-badge>
                           <q-input
+                            class="text-h4 q-mb-md"
                             filled
                             square
-                            v-model="inter.url"
+                            v-model="inter.name"
                             type="text"
                             bg-color="white"
                             dense
                             :rules="[
-                                () => !$v.inter.url.$error || '请输入'
+                                () => !$v.inter.name.$error || '请输入'
                               ]"
                             hide-bottom-space
                             :disable="!editable"
                           />
-                        </Field>
-                      </div>
-                      <div class="row">
+                        </div>
+                        <q-input
+                          style="height: 60px;"
+                          filled
+                          square
+                          v-model="inter.description"
+                          type="textarea"
+                          dense
+                          hide-bottom-space
+                          :disable="!editable"
+                        />
+                        <div class="row">
+                          <Field :label-col="3" align="right" style="width:10%;">
+                            <template v-slot:label>
+                              <span class="field"></span>
+                            </template>
+                            <q-select
+                              filled
+                              :display-value="formatSelectDisplay(methodTypes, inter.method)"
+                              v-model="inter.method"
+                              :options="methodTypes"
+                              emit-value
+                              dense
+                              hint
+                              bg-color="white"
+                              hide-dropdown-icon
+                              :disable="!editable"
+                              hide-bottom-space
+                            />
+                          </Field>
+                          <Field :label-col="1" align="right" style="width:90%;">
+                            <template v-slot:label>
+                              <span class="field"></span>
+                            </template>
+                            <q-input
+                              filled
+                              square
+                              v-model="inter.url"
+                              type="text"
+                              bg-color="white"
+                              dense
+                              :rules="[
+                                () => !$v.inter.url.$error || '请输入'
+                              ]"
+                              hide-bottom-space
+                              :disable="!editable"
+                            />
+                          </Field>
+                        </div>
+                        <div class="row">
+                          <Field :label-col="3" align="right" style="width:50%;">
+                            <template v-slot:label>
+                              <span class="field">状态:</span>
+                            </template>
+                            <q-select
+                              filled
+                              :display-value="formatSelectDisplay(interfaceStatus, inter.status)"
+                              v-model="inter.status"
+                              :options="interfaceStatus"
+                              dense
+                              hint
+                              emit-value
+                              bg-color="white"
+                              hide-dropdown-icon
+                              :disable="!editable"
+                              hide-bottom-space
+                            />
+                          </Field>
+                          <Field :label-col="3" align="right" style="width:50%;">
+                            <template v-slot:label>
+                              <span class="field">开放接口:</span>
+                            </template>
+                            <q-toggle :disable="!editable" v-model="inter.open" label />
+                          </Field>
+                        </div>
+                        <div class="row">
+                          <Field :label-col="3" align="right" style="width:50%;">
+                            <template v-slot:label>
+                              <span class="field">负责人:</span>
+                            </template>
+                            <span class="field" style="padding-left:10px;">liling</span>
+                          </Field>
+                          <Field :label-col="3" align="right" style="width:50%;">
+                            <template v-slot:label>
+                              <span class="field">更新时间:</span>
+                            </template>
+                            <span class="field" style="padding-left:10px;">{{inter.updated_at}}</span>
+                          </Field>
+                        </div>
                         <Field :label-col="3" align="right" style="width:50%;">
                           <template v-slot:label>
-                            <span class="field">状态:</span>
+                            <span class="field">Mock地址:</span>
                           </template>
-                          <q-select
-                            filled
-                            :display-value="formatSelectDisplay(interfaceStatus, inter.status)"
-                            v-model="inter.status"
-                            :options="interfaceStatus"
-                            dense
-                            hint
-                            emit-value
-                            bg-color="white"
-                            hide-dropdown-icon
-                            :disable="!editable"
-                            hide-bottom-space
-                          />
+                          <span class="field" style="padding-left:10px;">
+                            <label>http://localhost:8080</label>
+                            {{inter.url}}
+                          </span>
                         </Field>
                         <Field :label-col="3" align="right" style="width:50%;">
                           <template v-slot:label>
-                            <span class="field">开放接口:</span>
+                            <span class="field">编辑:</span>
                           </template>
-                          <q-toggle :disable="!editable" v-model="inter.open" label />
+                          <span class="field" style="padding-left:10px;">
+                            <a class="link text-primary" @click="toggleInterfaceEditModal">code模式</a>
+                            &nbsp;
+                            <a
+                              class="link text-primary"
+                              @click="tab = '_b'"
+                            >ui模式</a>
+                          </span>
                         </Field>
-                      </div>
-                      <div class="row">
-                        <Field :label-col="3" align="right" style="width:50%;">
-                          <template v-slot:label>
-                            <span class="field">负责人:</span>
-                          </template>
-                          <span class="field" style="padding-left:10px;">liling</span>
-                        </Field>
-                        <Field :label-col="3" align="right" style="width:50%;">
-                          <template v-slot:label>
-                            <span class="field">更新时间:</span>
-                          </template>
-                          <span class="field" style="padding-left:10px;">{{inter.updated_at}}</span>
-                        </Field>
-                      </div>
-                      <Field :label-col="3" align="right" style="width:50%;">
-                        <template v-slot:label>
-                          <span class="field">Mock地址:</span>
-                        </template>
-                        <span class="field" style="padding-left:10px;">
-                          <label>http://localhost:8080</label>
-                          {{inter.url}}
-                        </span>
-                      </Field>
-                      <Field :label-col="3" align="right" style="width:50%;">
-                        <template v-slot:label>
-                          <span class="field">编辑:</span>
-                        </template>
-                        <span class="field" style="padding-left:10px;">
-                          <a class="link text-primary" @click="toggleInterfaceEditModal">code模式</a>
-                          &nbsp;
-                          <a
-                            class="link text-primary"
-                            @click="tab = '_b'"
-                          >ui模式</a>
-                        </span>
-                      </Field>
-                    </q-card-section>
-                  </q-form>
-                </div>
+                      </q-card-section>
+                    </q-form>
+                  </div>
 
-                <div>
-                  <InterProfile ref="interProfile" :inter="inter"></InterProfile>
-                </div>
-              </q-tab-panel>
+                  <div>
+                    <InterProfile ref="interProfile" :inter="inter"></InterProfile>
+                  </div>
+                </q-tab-panel>
 
-              <q-tab-panel name="_b">
-                <InterUIEdit ref="interUIEdit" :inter="inter"></InterUIEdit>
-              </q-tab-panel>
-              <q-tab-panel name="_c">
-                <InterfaceTest :inter="inter"></InterfaceTest>
-              </q-tab-panel>
-            </q-tab-panels>
-          </q-tab-panel>
-        </q-tab-panels>
-      </template>
-    </q-splitter>
-    
-    <q-dialog seamless v-if="addGroupOpened" v-model="addGroupOpened" position="right" maximized>
-      <q-layout view="lHh lpr lFf" container class="modal-content-col-4">
-        <q-form @submit="handleAddGroup" ref="groupForm">
-          <q-header bordered class="bg-primary text-white">
-            <q-toolbar>
-              <q-btn flat v-close-popup round dense icon="arrow_back" />
-              <q-toolbar-title>{{group.name}} - 添加组</q-toolbar-title>
-            </q-toolbar>
-          </q-header>
+                <q-tab-panel name="_b">
+                  <InterUIEdit ref="interUIEdit" :inter="inter"></InterUIEdit>
+                </q-tab-panel>
+                <q-tab-panel name="_c">
+                  <InterfaceTest :inter="inter"></InterfaceTest>
+                </q-tab-panel>
+              </q-tab-panels>
+            </q-tab-panel>
+          </q-tab-panels>
+        </template>
+      </q-splitter>
 
-          <q-page-container>
-            <q-page padding>
-              <Field :label-col="2" label="组名称">
-                <q-input
-                  filled
-                  v-model="addGroupModel.name"
-                  type="text"
-                  autofocus
-                  dense
-                  :rules="[() => !$v.addGroupModel.name.$error || '请输入组名称']"
-                />
-              </Field>
-              <Field :label-col="2" label="描述">
-                <q-input filled v-model="addGroupModel.description" type="textarea" dense />
-              </Field>
-            </q-page>
-          </q-page-container>
+      <q-dialog seamless v-if="addGroupOpened" v-model="addGroupOpened" position="right" maximized>
+        <q-layout view="lHh lpr lFf" container class="modal-content-col-4">
+          <q-form @submit="handleAddGroup" ref="groupForm">
+            <q-header bordered class="bg-primary text-white">
+              <q-toolbar>
+                <q-btn flat v-close-popup round dense icon="arrow_back" />
+                <q-toolbar-title>{{group.name}} - 添加组</q-toolbar-title>
+              </q-toolbar>
+            </q-header>
 
-          <q-footer class="bg-white text-primary shadow-3">
-            <q-toolbar>
-              <q-space />
-              <q-btn color="primary" unelevated type="submit" label="提交" :loading="loading['']" />
-            </q-toolbar>
-          </q-footer>
-        </q-form>
-      </q-layout>
-    </q-dialog>
-    <q-dialog v-if="addInterfaceOpened" v-model="addInterfaceOpened">
-      <q-card style="width: auto;max-width: 80vw;">
-        <q-stepper v-model="step" vertical color="primary" animated>
-          <q-step :name="1" title="导入yaml文件" icon="settings" :done="step > 1">
-            从scum信息中导入已有的yaml文件,否者Continue创建新的接口.
-            <q-stepper-navigation>
-              <div v-if="group.scm_url === ''">
-                未找到应用的scm信息
-                <router-link
-                  :to="`/project/${group.project}/app/${group.application.id}`"
-                  class="link"
-                >&nbsp;添加</router-link>
-              </div>
-              <div v-else>
-                <span>yaml地址:</span>
-                <q-input
-                  filled
-                  square
-                  v-model="addInterfaceModel.yaml_path"
-                  type="text"
-                  dense
-                  hide-bottom-space
-                  placeholder="分支名/src/test.yaml"
-                />
-                {{group.scm_url + "blob/" + addInterfaceModel.yaml_path}}
-              </div>
-            </q-stepper-navigation>
-            <q-stepper-navigation>
-              <q-btn @click="importYaml" color="primary" label="Continue" />
-            </q-stepper-navigation>
-          </q-step>
-          <q-step :name="2" title="创建接口" icon="add_comment">
-            添加接口的基本信息.
-            <q-stepper-navigation>
-              <q-form @submit="handleAddInterface" ref="interfaceForm">
-                <Field contracted>
-                  <template v-slot:label>
-                    <span class="field">接口名称：</span>
-                  </template>
+            <q-page-container>
+              <q-page padding>
+                <Field :label-col="2" label="组名称">
                   <q-input
                     filled
-                    v-model="addInterfaceModel.name"
+                    v-model="addGroupModel.name"
                     type="text"
                     autofocus
                     dense
-                    :rules="[() => !$v.addInterfaceModel.name.$error || '请输入接口名称']"
+                    :rules="[() => !$v.addGroupModel.name.$error || '请输入组名称']"
                   />
                 </Field>
-                <div class="row" style="width: 490px;">
-                  <Field contracted class="col-4">
+                <Field :label-col="2" label="描述">
+                  <q-input filled v-model="addGroupModel.description" type="textarea" dense />
+                </Field>
+              </q-page>
+            </q-page-container>
+
+            <q-footer class="bg-white text-primary shadow-3">
+              <q-toolbar>
+                <q-space />
+                <q-btn color="primary" unelevated type="submit" label="提交" :loading="loading['']" />
+              </q-toolbar>
+            </q-footer>
+          </q-form>
+        </q-layout>
+      </q-dialog>
+      <q-dialog v-if="addInterfaceOpened" v-model="addInterfaceOpened">
+        <q-card style="width: auto;max-width: 80vw;">
+          <q-stepper v-model="step" vertical color="primary" animated>
+            <q-step :name="1" title="导入yaml文件" icon="settings" :done="step > 1">
+              从scum信息中导入已有的yaml文件,否者Continue创建新的接口.
+              <q-stepper-navigation>
+                <div v-if="group.scm_url === ''">
+                  未找到应用的scm信息
+                  <router-link
+                    :to="`/project/${group.project}/app/${group.application.id}`"
+                    class="link"
+                  >&nbsp;添加</router-link>
+                </div>
+                <div v-else>
+                  <span>yaml地址:</span>
+                  <q-input
+                    filled
+                    square
+                    v-model="addInterfaceModel.yaml_path"
+                    type="text"
+                    dense
+                    hide-bottom-space
+                    placeholder="分支名/src/test.yaml"
+                  />
+                  {{group.scm_url + "blob/" + addInterfaceModel.yaml_path}}
+                </div>
+              </q-stepper-navigation>
+              <q-stepper-navigation>
+                <q-btn @click="importYaml" color="primary" label="Continue" />
+              </q-stepper-navigation>
+            </q-step>
+            <q-step :name="2" title="创建接口" icon="add_comment">
+              添加接口的基本信息.
+              <q-stepper-navigation>
+                <q-form @submit="handleAddInterface" ref="interfaceForm">
+                  <Field contracted>
                     <template v-slot:label>
-                      <span class="field">接口路径：</span>
-                    </template>
-                    <q-select
-                      filled
-                      v-model="addInterfaceModel.method"
-                      :options="methodTypes"
-                      emit-value
-                      dense
-                      hint
-                      hide-bottom-space
-                      :rules="[() => !$v.addInterfaceModel.method.$error || '请输入method']"
-                    />
-                  </Field>
-                  <Field contracted class="col-8">
-                    <template v-slot:label>
-                      <span class="field"></span>
+                      <span class="field">接口名称：</span>
                     </template>
                     <q-input
-                      placeholder="/"
-                      align="right"
                       filled
-                      v-model="addInterfaceModel.url"
+                      v-model="addInterfaceModel.name"
                       type="text"
+                      autofocus
                       dense
-                      :rules="[() => !$v.addInterfaceModel.url.$error || '请输入接口路径']"
+                      :rules="[() => !$v.addInterfaceModel.name.$error || '请输入接口名称']"
                     />
                   </Field>
-                </div>
-                <Field contracted>
-                  <template v-slot:label>
-                    <span class="field">接口描述：</span>
-                  </template>
-                  <q-input filled v-model="addInterfaceModel.description" type="textarea" dense />
-                </Field>
-              </q-form>
-            </q-stepper-navigation>
-            <q-stepper-navigation>
-              <q-btn color="primary" @click="handleAddInterface" label="Finish" />
-              <q-btn flat @click="step = 1" color="primary" label="Back" class="q-ml-sm" />
-            </q-stepper-navigation>
-          </q-step>
-        </q-stepper>
-      </q-card>
-    </q-dialog>
-    <InterfaceEdit v-model="interfaceEditModalOpened" :inter="inter"></InterfaceEdit>
+                  <div class="row" style="width: 490px;">
+                    <Field contracted class="col-4">
+                      <template v-slot:label>
+                        <span class="field">接口路径：</span>
+                      </template>
+                      <q-select
+                        filled
+                        v-model="addInterfaceModel.method"
+                        :options="methodTypes"
+                        emit-value
+                        dense
+                        hint
+                        hide-bottom-space
+                        :rules="[() => !$v.addInterfaceModel.method.$error || '请输入method']"
+                      />
+                    </Field>
+                    <Field contracted class="col-8">
+                      <template v-slot:label>
+                        <span class="field"></span>
+                      </template>
+                      <q-input
+                        placeholder="/"
+                        align="right"
+                        filled
+                        v-model="addInterfaceModel.url"
+                        type="text"
+                        dense
+                        :rules="[() => !$v.addInterfaceModel.url.$error || '请输入接口路径']"
+                      />
+                    </Field>
+                  </div>
+                  <Field contracted>
+                    <template v-slot:label>
+                      <span class="field">接口描述：</span>
+                    </template>
+                    <q-input filled v-model="addInterfaceModel.description" type="textarea" dense />
+                  </Field>
+                </q-form>
+              </q-stepper-navigation>
+              <q-stepper-navigation>
+                <q-btn color="primary" @click="handleAddInterface" label="Finish" />
+                <q-btn flat @click="step = 1" color="primary" label="Back" class="q-ml-sm" />
+              </q-stepper-navigation>
+            </q-step>
+          </q-stepper>
+        </q-card>
+      </q-dialog>
+      <InterfaceEdit v-model="interfaceEditModalOpened" :inter="inter"></InterfaceEdit>
     </Loading>
   </div>
 </template>
@@ -583,7 +599,45 @@ export default {
       interFlag: false,
       groupFlag: false,
       editor: "",
-      step: 1
+      step: 1,
+      columns: [
+        {
+          name: "name",
+          align: "center",
+          label: "name",
+          field: "name",
+          sortable: true
+        },
+        {
+          name: "method",
+          align: "center",
+          label: "method",
+          field: "method",
+          sortable: true
+        },
+        {
+          name: "url",
+          align: "center",
+          label: "url",
+          field: "url",
+          sortable: true
+        },
+        {
+          name: "status",
+          align: "center",
+          label: "status",
+          field: row => formatSelectDisplay(this.interfaceStatus, row.status),
+          sortable: true
+        },
+        {
+          name: "operation",
+          align: "center",
+          label: "操作",
+          field: row => row,
+          sortable: true
+        }
+      ],
+      dataList: []
     };
   },
   validations: {
@@ -679,11 +733,14 @@ export default {
             ].application.repo.scm_url.replace(".git", "/");
             //查询有多少个接口
             let num = 0;
+            this.dataList = [];
             for (let i = 0; i < this.interfaces.length; i++) {
               if (this.selected == this.interfaces[i].group.id) {
                 num = num + 1;
+                this.dataList.push(this.interfaces[i]);
               }
             }
+            console.log(this.dataList);
             if (num > 0) {
               this.addGroupFlag = false;
             } else {
@@ -754,7 +811,7 @@ export default {
           console.error(error);
           return;
         }
-      } else if("code" === model) {
+      } else if ("code" === model) {
         //code模式
         try {
           let str = this.editor.specSelectors.specStr();
@@ -894,6 +951,10 @@ export default {
           return;
         }
       }
+    },
+    handleShowInter(row) {
+      this.selected = "interId_" + row.id;
+      this.clickTree();
     }
   },
   async created() {

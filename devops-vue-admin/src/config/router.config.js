@@ -32,6 +32,9 @@ import TestIndex from '@/views/project/Test/Index';
 import EnvProfile from '@/views/project/Test/EnvConfig';
 import CaseProfile from '@/views/project/Test/CaseConfig';
 import PlanList from '@/views/project/Test/PlanList';
+//Pipelines
+import PipelinesIndex from '@/views/project/Pipelines/Index';
+import PipelinesList from '@/views/project/Pipelines/List';
 
 export default [
   // login
@@ -253,6 +256,42 @@ export default [
             path: 'dictionary',
             meta: {
               name: '字典',
+              footerHidden: true,
+              mini: true
+            }
+          }
+        ]
+      },
+      {
+        path: 'project/:projectId/Pipelines',
+        meta: {
+          name: 'Pipelines',
+          icon: 'style',
+          behave: 'link'
+        },
+        component: PipelinesIndex,
+        children: [
+          {
+            path: 'Pipelines',
+            meta: {
+              name: 'Pipelines',
+              footerHidden: true,
+              mini: true
+            },
+            component: PipelinesList
+          },
+          {
+            path: '环境设置',
+            meta: {
+              name: '环境设置',
+              footerHidden: true,
+              mini: true
+            }
+          },
+          {
+            path: '发布',
+            meta: {
+              name: '发布',
               footerHidden: true,
               mini: true
             }
