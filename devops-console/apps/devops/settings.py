@@ -161,7 +161,7 @@ LOGOUT_URL = reverse_lazy('users:logout')
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
 
-LANGUAGE_CODE = 'zh_cn'
+LANGUAGE_CODE = 'zh-hans'
 
 TIME_ZONE = 'Asia/Shanghai'
 
