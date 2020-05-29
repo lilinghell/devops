@@ -916,7 +916,9 @@ export default {
       window.editor = this.editor;
       this.editor.specActions.updateSpec(this.inter.info);
       var v = document.getElementsByClassName("opblock-summary");
-      v[0].click();
+      if(v.length > 0) {
+         v[0].click();
+      }
     },
     async importYaml() {
       if (
