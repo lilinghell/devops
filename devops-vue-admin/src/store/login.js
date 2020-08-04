@@ -3,7 +3,8 @@ import { LocalStorage } from 'quasar';
 import router from '@/router';
 import { login, logout } from '@/services/api';
 import { setAuthority } from '@/utils/authority';
-import { getPageQuery } from '@/utils/utils';
+import {getPageQuery, resolveResponseError} from '@/utils/utils';
+import {addApp} from "@/services/project";
 
 export default {
   namespaced: true,
@@ -14,7 +15,10 @@ export default {
 
   actions: {
     async login({ commit, state }, payload) {
-      const response = await login(payload);
+      // const response = await login(payload);
+      const response = await resolveResponseError(() =>
+        login(payload)
+      );
       const { status } = response;
       response.currentAuthority =
         status !== 'error' ? response.user.authority : 'guest';

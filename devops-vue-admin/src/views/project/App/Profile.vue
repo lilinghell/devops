@@ -4,16 +4,17 @@
       <q-card-section class="q-pl-none q-pt-none row items-start">
         <div class="col-8">
           <div class="text-h5 text-title">
-            {{ app.name }}<q-badge class="q-ml-sm">{{ app.type }}</q-badge>
+            {{ app.name }}
+            <q-badge class="q-ml-sm">{{ app.type }}</q-badge>
           </div>
           <div class="text-subtitle1 text-grey-7">{{ app.owner }}</div>
           <div class="text-subtitle2 text-grey-7">{{ app.description }}</div>
         </div>
-        <q-space />
+        <q-space/>
         <q-btn-group unelevated>
-          <q-btn outline color="primary" label="处理" />
-          <q-btn outline color="primary" label="处理" />
-          <q-btn outline color="primary" label="处理" />
+          <q-btn outline color="primary" label="处理"/>
+          <q-btn outline color="primary" label="处理"/>
+          <q-btn outline color="primary" label="处理"/>
         </q-btn-group>
       </q-card-section>
       <q-card-section>
@@ -28,10 +29,10 @@
         active-color="primary"
         indicator-color="primary"
       >
-        <q-tab name="_a" label="服务定义" />
-        <q-tab name="_b" label="SCM信息" />
-        <q-tab name="_c" label="流水线" />
-        <q-tab name="_d" label="任务" />
+        <q-tab name="_a" label="服务定义"/>
+        <q-tab name="_b" label="SCM信息"/>
+        <q-tab name="_c" label="流水线"/>
+        <q-tab name="_d" label="任务"/>
       </q-tabs>
     </template>
 
@@ -56,7 +57,7 @@
                 <template v-slot:body-cell-operation="props">
                   <q-td :class="props.col.__tdClass" class="q-gutter-x-sm">
                     <a :href="props.row.web_url" target="_blank" class="link"
-                      >管理</a
+                    >管理</a
                     >
                   </q-td>
                 </template>
@@ -66,7 +67,7 @@
               <q-card flat>
                 <q-form ref="SCMForm" @submit="handleUpdateSCM">
                   <q-toolbar class="bg-primary text-white">
-                    <q-space />
+                    <q-space/>
                     <q-btn
                       flat
                       size="12px"
@@ -195,16 +196,16 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
-import { required } from 'vuelidate/lib/validators';
+import {mapState, mapActions} from 'vuex';
+import {required} from 'vuelidate/lib/validators';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import Loading from '@/components/Loading';
 import Field from '@/components/Field';
 import DescriptionList from '@/components/DescriptionList';
 import Description from '@/components/DescriptionList/Description';
-import { queryApp } from '@/services/project';
-import { resolveResponseError, successNotify } from '@/utils/utils';
-import { createAppModel, createRepoModel, vars } from '../model';
+import {queryApp} from '@/services/project';
+import {resolveResponseError, successNotify} from '@/utils/utils';
+import {createAppModel, createRepoModel, vars} from '../model';
 
 export default {
   name: 'Profile',
@@ -212,8 +213,7 @@ export default {
     PageHeaderWrapper,
     Loading,
     Field,
-    DescriptionList,
-    Description
+    DescriptionList, Description
   },
   data() {
     return {
@@ -243,11 +243,11 @@ export default {
   },
   validations: {
     updateSCMModel: {
-      type: { required },
-      scm_url: { required },
-      auth_type: { required },
-      auth_token: { required },
-      branch: { required }
+      type: {required},
+      scm_url: {required},
+      auth_type: {required},
+      auth_token: {required},
+      branch: {required}
     }
   },
   watch: {},
@@ -308,7 +308,8 @@ export default {
 
     this.globalLoading = false;
   },
-  mounted() {}
+  mounted() {
+  }
 };
 </script>
 
