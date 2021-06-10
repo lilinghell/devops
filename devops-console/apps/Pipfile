@@ -6,7 +6,7 @@ verify_ssl = false
 [dev-packages]
 
 [packages]
-django = "==2.2.13"
+django = "==2.2.24"
 djangorestframework = "*"
 django-cors-headers = "==2.4.0"
 pygments = "*"
